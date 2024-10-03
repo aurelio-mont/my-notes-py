@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import Note from "../components/Note";
 
+import "../styles/Home.css";
+
 function Home() {
   const [notes, setNotes] = useState({});
+  const [data, setData] = useState({});
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -16,8 +20,7 @@ function Home() {
       .get("/api/notes/")
       .then((res) => res.data)
       .then((data) => {
-        setNotes(data);
-        console.log(notes);
+        setData(data);
       })
       .catch((err) => alert(err));
   };
@@ -48,6 +51,14 @@ function Home() {
     <div>
       <div>
         <h2>Notes</h2>
+        {data.results &&
+          data.results.map((note) => (
+            <Note
+              key={note.id}
+              note={note}
+              onDelete={() => deleteNote(note.id)}
+            />
+          ))}
       </div>
       <h2>Create Note</h2>
       <form onSubmit={createNote}>
@@ -69,7 +80,7 @@ function Home() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
-        <button type="submit" value="Submit">
+        <button className="form-button" type="submit" value="Submit">
           Submit
         </button>
       </form>

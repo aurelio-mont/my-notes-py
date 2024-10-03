@@ -1,3 +1,5 @@
+import "../styles/Note.css";
+
 function Note({ note, onDelete }) {
   const formatDate = new Date(note.created_at).toLocaleString("en-US");
   return (
@@ -5,7 +7,7 @@ function Note({ note, onDelete }) {
       <p className="note-title">{note.title}</p>
       <p className="note-content">{note.content}</p>
       <p className="note-date">{formatDate}</p>
-      <button className="note-delete" onClick={() => onDelete(note.id)}>
+      <button className="delete-button" onClick={() => onDelete(note.id)}>
         Delete
       </button>
     </div>
